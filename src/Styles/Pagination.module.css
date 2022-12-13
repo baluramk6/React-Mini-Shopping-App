@@ -1,0 +1,39 @@
+.main_container {
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  padding: 1rem 0 3rem 0;
+  display: flex;
+}
+
+.button_wrapper > button {
+  width: 70px;
+  height: 35px;
+  border: none;
+  color: #500000;
+  background-color: #ff221a;
+  border-radius: 5px;
+  margin: 0 10px 0 10px;
+  font-weight: 700;
+}
+
+.button_wrapper > button:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.select_wrapper select {
+  width: 70px;
+  height: 35px;
+  border: none;
+  color: #500000;
+  background-color: #ff221a;
+  border-radius: 5px;
+  margin: 0 10px 0 10px;
+  font-weight: 700;
+}
+
+.select_wrapper select:hover {
+  cursor: pointer;
+  color: white;
+}

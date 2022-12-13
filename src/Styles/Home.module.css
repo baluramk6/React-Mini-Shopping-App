@@ -1,0 +1,30 @@
+.heading_wrapper {
+  margin: 1.5rem 0 1.5rem 0;
+  text-align: center;
+}
+
+.slide_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide_container > div:nth-child(1),
+.slide_container > div:nth-child(3) {
+  margin: 0 10px 0 10px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.slide_container > div:nth-child(2) {
+  height: 300px;
+  padding: 7px;
+  background-color: red;
+  border-radius: 5px;
+}
+
+.slide_container > div:nth-child(2) img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}

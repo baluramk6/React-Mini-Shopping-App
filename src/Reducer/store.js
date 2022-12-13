@@ -1,0 +1,25 @@
+
+export const store = {
+    isAuth: false,
+    isError: false,
+    isLoading: false,
+    email: "",
+    password: "",
+    token: null,
+    slides: null,
+    currentSlide: 0,
+    products: null,
+    cartProduct: null,
+    page: 1,
+    limit: 5,
+    singleProduct: null,
+    qty: 1,
+    checkoutData: null,
+    firstName: "",
+    lastName: "",
+    formEmail: "",
+    mobile: "",
+    address: "",
+    city: "",
+    country: ""
+}

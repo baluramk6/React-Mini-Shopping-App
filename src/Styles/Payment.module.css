@@ -1,0 +1,69 @@
+.main_container {
+  width: 100%;
+  height: 100vh;
+  background-color: #ffe1e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment_wrapper {
+  width: 25%;
+  height: 30rem;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.payment_wrapper > div:nth-child(1) {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment_wrapper > div:nth-child(2) {
+  width: 100%;
+  height: 75%;
+  padding: 2rem;
+  border-top: 1px solid #bfbfbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment_wrapper > div:nth-child(3) {
+  width: 100%;
+  height: 10%;
+}
+
+.payment_wrapper > div:nth-child(3) button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #21d59e;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.input_wrapper > div {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0 1rem 0;
+}
+
+.input_wrapper > div > label {
+  margin: 0 0 0.5rem 0;
+}
+
+.input_wrapper > div > input {
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #bfbfbf;
+  padding: 0 0 0 1rem;
+  font-size: 1rem;
+}

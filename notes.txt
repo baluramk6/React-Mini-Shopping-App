@@ -1,0 +1,278 @@
+import React from "react";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { AppContext } from "../Context/AppContextProvider";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getCartProduct,
+  removeFromCart,
+  changeQuantity,
+  checkout,
+} from "../Reducer/actionCreater";
+import style from "../Styles/CartItem.module.css";
+
+export const CartItem = () => {
+  const { state, dispatch } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getCartProduct("cartitem", dispatch);
+  }, []);
+
+  const totalPrice = state.cartProduct?.reduce(
+    (v1, v2) => (v1 + v2.price) * v2.qty,
+    0
+  );
+  const totalItem = state.cartProduct?.reduce((v1, v2) => v1 + v2.qty, 0);
+
+  const dis = (totalPrice, per) => {
+    return (totalPrice / 100) * per;
+  };
+  const discount = Math.floor(dis(totalPrice, 20));
+
+  const shipping = (totalPrice, per) => {
+    return (totalPrice / 100) * per;
+  };
+  const shippingCharge = Math.floor(shipping(totalPrice, 5));
+
+  const total = totalPrice - discount + shippingCharge;
+  return (
+    <div className={style.main_container}>
+      <div className={style.cart_heading_wrapper}>
+        <h1>Cart Items</h1>
+        <h2>Total:{totalPrice}</h2>
+      </div>
+      <div className={style.cart_product_container}>
+        {state.cartProduct?.map((item) => {
+          return (
+            <div className={style.cart_product_wrapper} key={item.id}>
+              <div className={style.image_wrapper}>
+                <img src={item.thumbnail} alt="" />
+              </div>
+              <div className={style.detail_wrapper}>
+                <p>{item.title}</p>
+                <p>{`Price: ${item.price}`}</p>
+                <p>{`Brand: ${item.brand}`}</p>
+                <p>{`Category: ${item.category}`}</p>
+                <p>
+                  Rating: <span>{item.rating}</span>
+                </p>
+              </div>
+              <div className={style.right_wrapper}>
+                <div className={style.btn_wrapper}>
+                  <button
+                    disabled={item.qty === 1}
+                    onClick={() =>
+                      changeQuantity(item.id, "cartitem", dispatch, {
+                        ...item,
+                        qty: item.qty - 1,
+                      })
+                    }
+                  >
+                    -
+                  </button>
+                  <button>{item.qty}</button>
+                  <button
+                    
+                  >
+                    +
+                  </button>
+                </div>
+                <div className={style.remove_btn_wrapper}>
+                  <button
+                    onClick={() =>
+                      removeFromCart("cartitem", item.id, dispatch)
+                    }
+                  >
+                    Remove Item
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div className={style.checkout_btn_wrapper}>
+          <button
+            onClick={() =>
+              checkout("checkout", navigate, dispatch, {
+                totalPrice,
+                discount,
+                shippingCharge,
+                total,
+                totalItem,
+              })
+            }
+          >
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+//CSS
+.main_container {
+  width: 100%;
+  margin: auto;
+}
+
+.cart_heading_wrapper {
+  margin: 1rem auto 0 auto;
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  align-items: center;
+}
+
+.cart_product_container {
+  width: 95%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  margin: auto;
+  border: 2px solid red;
+}
+
+.cart_product_wrapper {
+  width: 100%;
+  height: 14rem;
+  padding: 2rem;
+  margin: 1rem 0 1rem 0;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border: 2px solid gold;
+  display: flex;
+  justify-content: center;
+}
+
+.image_wrapper {
+  height: 100%;
+  width: 20%;
+}
+
+.image_wrapper img {
+  width: 100%;
+  height: 100%;
+}
+
+.detail_wrapper {
+  width: 40%;
+  height: 100%;
+  margin: 0 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px solid blue;
+}
+
+.detail_wrapper p:nth-child(1) {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: black;
+}
+
+.detail_wrapper p:nth-child(2) {
+  font-size: 1rem;
+  font-weight: 700;
+  color: black;
+}
+.detail_wrapper p:nth-child(3),
+p:nth-child(4),
+p:nth-child(5) {
+  font-size: 1rem;
+  color: #2d2d2d;
+}
+
+.detail_wrapper p:nth-child(5) span {
+  background-color: rgb(85, 251, 85);
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.right_wrapper {
+  width: 40%;
+  height: 100%;
+  margin: 0 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  border: 2px solid hotpink;
+}
+
+.btn_wrapper {
+  display: flex;
+  align-items: baseline;
+  justify-content: end;
+  border: 2px solid green;
+}
+
+.btn_wrapper > button {
+  border: none;
+  width: 50px;
+  height: 25px;
+  border-radius: 5px;
+  margin: 0 0 0 0.8rem;
+}
+
+.btn_wrapper button:nth-child(1),
+button:nth-child(3) {
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #696969;
+  cursor: pointer;
+}
+
+.btn_wrapper button:nth-child(2) {
+  background-color: white;
+  border: 1px solid #2d2d2d;
+}
+
+.remove_btn_wrapper > button {
+  padding: 0.5rem 2.5rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: normal;
+  color: #500000;
+  font-weight: bold;
+  background-color: #ff1a1a;
+  border: none;
+  cursor: pointer;
+}
+
+.remove_btn_wrapper > button:hover {
+  background-color: #b40000;
+  color: white;
+}
+
+.checkout_btn_wrapper {
+  width: 100%;
+  height: 40px;
+  padding: 1px;
+  margin-bottom: 4rem;
+}
+
+.checkout_btn_wrapper button {
+  border: none;
+  width: 100%;
+  height: 100%;
+  background-color: #80ff80;
+  cursor: pointer;
+  border: 1px solid #500000;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
